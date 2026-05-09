@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>DevTalking Episode</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#0a0a0a;--white:#ffffff;
+  --gray-50:#f9f9f7;--gray-100:#f0efea;--gray-200:#e0dfda;--gray-400:#a0a09a;--gray-600:#5f5e5a;
+  --radius:8px;
+  /* Web3 colors */
+  --bg:#0e0c1a;--surface:#16132a;--surface2:#1e1a35;
+  --purple:#6c5ce7;--pl:#c084fc;--pb:rgba(124,111,205,0.25);--pd:rgba(108,92,231,0.15);
+  --wtext:#e8d5ff;--tm:#c8b8f8;--td:#7c6fcd;--tf:#4a4370;
+  --green:#10b981;--gd:rgba(16,185,129,0.12);--gb:rgba(16,185,129,0.3);
+  --amber:#f59e0b;--ad:rgba(245,158,11,0.12);--ab:rgba(245,158,11,0.3);
+  --red:#ef4444;--rd:rgba(239,68,68,0.12);--rb:rgba(239,68,68,0.3);
+  --founder:#fbbf24;--founderd:rgba(251,191,36,0.12);--founderb:rgba(251,191,36,0.3);
+  --builder:#c084fc;--builderd:rgba(192,132,252,0.12);--builderb:rgba(192,132,252,0.3);
+  --supporter:#60a5fa;--supporterd:rgba(96,165,250,0.12);--supporterb:rgba(96,165,250,0.3);
+  --member:#34d399;--memberd:rgba(52,211,153,0.12);--memberb:rgba(52,211,153,0.3);
+}
+html{font-family:'Inter',sans-serif;color:var(--black);background:var(--white);font-size:15px;line-height:1.6}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+button,input,select{font-family:'Inter',sans-serif}
+input:focus,select:focus{outline:none;border-color:rgba(108,92,231,0.6)!important;box-shadow:0 0 0 3px rgba(108,92,231,0.1)}
+::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:#f0efea}::-webkit-scrollbar-thumb{background:#c8c8c8;border-radius:3px}
+
+/* ── NAV ── */
+nav{display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:64px;border-bottom:1px solid var(--gray-200);position:sticky;top:0;background:rgba(255,255,255,0.97);z-index:100;backdrop-filter:blur(8px);gap:12px}
+.nav-brand{display:flex;align-items:center;gap:10px;font-family:'Syne',sans-serif;font-weight:800;font-size:1.05rem;letter-spacing:-0.02em;flex-shrink:0}
+.nav-links{display:flex;gap:1.25rem;align-items:center;flex-wrap:wrap}
+.nav-links a{font-size:0.85rem;color:var(--gray-600);font-weight:500;transition:color .15s}
+.nav-links a:hover{color:var(--black)}
+.nav-right{display:flex;align-items:center;gap:10px;flex-shrink:0}
+
+/* ── WALLET BUTTON ── */
+.wallet-connect-btn{display:inline-flex;align-items:center;gap:7px;background:linear-gradient(135deg,var(--purple),#9b6bda);border:none;border-radius:10px;padding:8px 16px;color:#fff;font-weight:700;font-size:12px;cursor:pointer;transition:opacity .15s;white-space:nowrap}
+.wallet-connect-btn:hover{opacity:0.85}
+.wallet-chip{display:inline-flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--pb);border-radius:10px;padding:7px 13px;color:var(--wtext);font-weight:600;font-size:12px;cursor:pointer;transition:all .15s;position:relative;white-space:nowrap}
+.wallet-dot{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 6px var(--green);flex-shrink:0}
+.wallet-dropdown{position:absolute;right:0;top:calc(100% + 8px);background:var(--surface);border:1px solid var(--pb);border-radius:14px;padding:1rem;min-width:260px;z-index:200;box-shadow:0 12px 40px rgba(0,0,0,0.35);display:none}
+.wallet-dropdown.open{display:block}
+
+/* ── HERO ── */
+.hero{display:flex;flex-direction:column;align-items:center;text-align:center;padding:5rem 2rem 4rem;background:var(--white)}
+.hero-logo{width:100px;height:100px;margin:0 auto 2rem;display:flex;align-items:center;justify-content:center}
+.hero h1{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2rem,5vw,3.5rem);letter-spacing:-0.03em;line-height:1.1;max-width:720px;margin-bottom:1.25rem}
+.hero p{color:var(--gray-600);max-width:560px;font-size:1rem;margin-bottom:2rem}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;background:var(--black);color:#fff;padding:0.75rem 1.75rem;border-radius:var(--radius);font-weight:600;font-size:0.9rem;transition:opacity .15s}
+.btn-primary:hover{opacity:0.85}
+.btn-web3{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--purple),#9b6bda);color:#fff;padding:0.75rem 1.75rem;border-radius:var(--radius);font-weight:700;font-size:0.9rem;border:none;cursor:pointer;transition:opacity .15s}
+.btn-web3:hover{opacity:0.85}
+
+/* ── SECTIONS ── */
+.section{padding:4rem 2rem;max-width:1100px;margin:0 auto}
+.section-header{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:2rem}
+.section-header h2{font-family:'Syne',sans-serif;font-weight:700;font-size:1.5rem;letter-spacing:-0.02em}
+.section-header a{font-size:0.875rem;color:var(--gray-600);font-weight:500;text-decoration:underline;text-underline-offset:3px}
+
+/* ── EPISODES ── */
+.episodes-grid{display:grid;gap:1rem}
+.ep-card{display:grid;grid-template-columns:auto 1fr;gap:1.25rem;border:1px solid var(--gray-200);border-radius:12px;padding:1.25rem;transition:border-color .15s,box-shadow .15s;cursor:pointer}
+.ep-card:hover{border-color:var(--gray-400);box-shadow:0 2px 12px rgba(0,0,0,0.06)}
+.ep-badge{display:inline-flex;align-items:center;gap:6px;background:var(--black);color:#fff;font-size:0.7rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase;padding:3px 8px;border-radius:4px;margin-bottom:0.5rem;width:fit-content}
+.ep-badge.latest{background:#16a34a}
+.ep-meta{font-size:0.8rem;color:var(--gray-400);margin-bottom:0.35rem}
+.ep-title{font-family:'Syne',sans-serif;font-weight:700;font-size:1rem;margin-bottom:0.4rem;line-height:1.35}
+.ep-desc{font-size:0.85rem;color:var(--gray-600);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.ep-num{width:48px;height:48px;border-radius:10px;background:var(--gray-100);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0}
+.ep-num span:first-child{font-size:0.6rem;color:var(--gray-400);font-weight:600;text-transform:uppercase;letter-spacing:0.05em}
+.ep-num span:last-child{font-size:1rem;font-weight:800;font-family:'Syne',sans-serif}
+
+/* ── STATS ── */
+.stats-band{background:var(--gray-50);border-top:1px solid var(--gray-200);border-bottom:1px solid var(--gray-200);padding:3rem 2rem}
+.stats-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:2rem;text-align:center}
+.stat-num{font-family:'Syne',sans-serif;font-weight:800;font-size:2.5rem;letter-spacing:-0.04em}
+.stat-label{font-size:0.85rem;color:var(--gray-600);font-weight:500;margin-top:4px}
+
+/* ── WEB3 BAND ── */
+.web3-band{background:var(--bg);padding:3rem 2rem;border-top:1px solid rgba(108,92,231,0.2)}
+.web3-inner{max-width:1100px;margin:0 auto}
+.web3-band h2{font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;color:var(--wtext);letter-spacing:-0.02em;margin-bottom:6px}
+.web3-band p{font-size:14px;color:var(--td);margin-bottom:2rem}
+.tier-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:2rem}
+.tier-card{border-radius:14px;padding:1.25rem;text-align:center;border:1px solid;cursor:pointer;transition:transform .15s}
+.tier-card:hover{transform:translateY(-2px)}
+.tier-icon{font-size:32px;margin-bottom:10px}
+.tier-name{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;margin-bottom:4px}
+.tier-req{font-size:12px;opacity:0.7;margin-bottom:10px}
+.tier-perks{font-size:11px;opacity:0.7;line-height:1.6}
+
+/* ── TOKEN GATE ── */
+.token-gate-section{background:var(--bg);padding:3rem 2rem;border-top:1px solid rgba(108,92,231,0.15)}
+.token-gate-inner{max-width:1100px;margin:0 auto}
+.token-gate-inner h2{font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;color:var(--wtext);letter-spacing:-0.02em;margin-bottom:6px}
+.token-gate-inner > p{font-size:14px;color:var(--td);margin-bottom:2rem}
+.gate-tabs{display:flex;gap:6px;margin-bottom:1.5rem;flex-wrap:wrap}
+.gate-tab{padding:7px 16px;border-radius:20px;font-size:12px;font-weight:700;cursor:pointer;border:1px solid var(--pb);background:transparent;color:var(--td);transition:all .15s}
+.gate-tab.active{background:var(--purple);border-color:var(--purple);color:#fff}
+.gate-content-area{min-height:160px}
+
+/* ── VOTING SECTION ── */
+.voting-section{background:linear-gradient(180deg,var(--bg) 0%,#0d0a20 100%);padding:3rem 2rem;border-top:1px solid rgba(108,92,231,0.15)}
+.voting-inner{max-width:1100px;margin:0 auto}
+.voting-inner h2{font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;color:var(--wtext);letter-spacing:-0.02em;margin-bottom:6px}
+.voting-inner > p{font-size:14px;color:var(--td);margin-bottom:1.5rem}
+.vote-card{background:var(--surface);border:1px solid var(--pb);border-radius:14px;padding:1.1rem 1.25rem;display:flex;align-items:center;gap:14px;margin-bottom:10px;transition:all .2s}
+.vote-card.voted{background:var(--pd);border-color:rgba(192,132,252,0.4);box-shadow:0 4px 20px rgba(108,92,231,0.15)}
+.vote-ep-num{min-width:46px;height:46px;border-radius:10px;background:var(--surface2);border:1px solid var(--pb);display:flex;flex-direction:column;align-items:center;justify-content:center;flex-shrink:0}
+.vote-ep-s{font-size:8px;color:var(--td);font-weight:700;text-transform:uppercase}
+.vote-ep-n{font-size:14px;font-weight:800;color:var(--tm);font-family:'Syne',sans-serif}
+.vote-btn{width:42px;height:42px;border-radius:50%;border:1.5px solid var(--pb);background:transparent;color:var(--td);font-size:16px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .15s;flex-shrink:0}
+.vote-btn.voted{background:linear-gradient(135deg,var(--purple),#9b6bda);border-color:transparent;color:#fff;box-shadow:0 0 14px rgba(108,92,231,0.5)}
+.vote-btn:disabled{opacity:0.4;cursor:not-allowed}
+.vote-tag{background:var(--pd);border:1px solid var(--pb);border-radius:20px;padding:2px 8px;font-size:10px;font-weight:600;color:var(--td);display:inline-block;margin:2px}
+.weight-bar{height:3px;background:rgba(124,111,205,0.15);border-radius:2px;overflow:hidden;margin-top:6px}
+.weight-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--pl));border-radius:2px}
+.lb-row{display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--pb)}
+.lb-row:last-child{border-bottom:none}
+
+/* ── TESTIMONIALS ── */
+.testimonials-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem}
+.testi-card{border:1px solid var(--gray-200);border-radius:12px;padding:1.25rem;display:flex;flex-direction:column;gap:0.75rem}
+.testi-text{font-size:0.875rem;line-height:1.65;color:var(--gray-600);flex:1}
+.testi-author{display:flex;align-items:center;gap:10px}
+.testi-avatar{width:36px;height:36px;border-radius:50%;background:var(--gray-200);overflow:hidden;flex-shrink:0}
+.testi-avatar img{width:100%;height:100%;object-fit:cover}
+.testi-name{font-weight:600;font-size:0.85rem}
+.testi-role{font-size:0.78rem;color:var(--gray-400)}
+
+/* ── ABOUT ── */
+.about-section{padding:4rem 2rem;background:var(--gray-50);border-top:1px solid var(--gray-200)}
+.about-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:center}
+.about-img{border-radius:16px;overflow:hidden;background:var(--gray-200);aspect-ratio:16/9}
+.about-img img{width:100%;height:100%;object-fit:cover}
+.about-content h2{font-family:'Syne',sans-serif;font-weight:700;font-size:1.5rem;margin-bottom:1rem;letter-spacing:-0.02em}
+.about-content p{color:var(--gray-600);font-size:0.9rem;line-height:1.75;margin-bottom:1.25rem}
+.link-arrow{font-weight:600;font-size:0.875rem;display:inline-flex;align-items:center;gap:4px;border-bottom:1.5px solid var(--black);padding-bottom:1px}
+
+/* ── COMPANIES ── */
+.companies-section{padding:3rem 2rem;border-top:1px solid var(--gray-200)}
+.companies-inner{max-width:1100px;margin:0 auto}
+.companies-inner h2{font-family:'Syne',sans-serif;font-weight:700;font-size:1.25rem;margin-bottom:2rem;letter-spacing:-0.02em}
+.companies-scroll{display:flex;gap:8px;flex-wrap:wrap}
+.company-chip{border:1px solid var(--gray-200);border-radius:8px;padding:6px 14px;font-size:0.8rem;font-weight:500;color:var(--gray-600);transition:border-color .15s}
+.company-chip:hover{border-color:var(--gray-400)}
+
+/* ── CTA ── */
+.cta-strip{padding:3rem 2rem;border-top:1px solid var(--gray-200)}
+.cta-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:2rem}
+.cta-card{border:1px solid var(--gray-200);border-radius:16px;padding:2rem;background:var(--white)}
+.cta-card h3{font-family:'Syne',sans-serif;font-weight:700;font-size:1.1rem;margin-bottom:0.5rem}
+.cta-card p{font-size:0.875rem;color:var(--gray-600);margin-bottom:1.25rem;line-height:1.65}
+.btn-outline{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--black);color:var(--black);background:transparent;padding:0.6rem 1.25rem;border-radius:var(--radius);font-weight:600;font-size:0.85rem;transition:background .15s,color .15s;cursor:pointer;text-decoration:none}
+.btn-outline:hover{background:var(--black);color:#fff}
+
+/* ── FOOTER ── */
+footer{background:var(--gray-50);border-top:1px solid var(--gray-200);padding:3rem 2rem 2rem}
+.footer-inner{max-width:1100px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:auto 1fr;gap:3rem;margin-bottom:2rem}
+.footer-brand{font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;display:flex;align-items:center;gap:10px}
+.footer-links{display:flex;gap:1.5rem;flex-wrap:wrap;margin-top:0.75rem}
+.footer-links a{font-size:0.85rem;color:var(--gray-600);font-weight:500;transition:color .15s}
+.footer-links a:hover{color:var(--black)}
+.footer-bottom{display:flex;justify-content:space-between;align-items:center;padding-top:1.5rem;border-top:1px solid var(--gray-200);flex-wrap:wrap;gap:12px}
+.footer-copy{font-size:0.8rem;color:var(--gray-400)}
+.x-badge{display:inline-flex;align-items:center;gap:7px;background:#000;color:#fff;padding:7px 16px;border-radius:20px;font-size:0.8rem;font-weight:600;transition:opacity .15s}
+.x-badge:hover{opacity:0.8}
+.x-icon{width:14px;height:14px;fill:#fff;flex-shrink:0}
+
+/* ── CONNECT MODAL ── */
+.modal-overlay{position:fixed;inset:0;z-index:1000;background:rgba(10,8,20,0.88);display:flex;align-items:center;justify-content:center;backdrop-filter:blur(8px);display:none}
+.modal-overlay.open{display:flex}
+.modal-box{background:var(--surface);border:1px solid var(--pb);border-radius:20px;padding:2rem;width:100%;max-width:420px;box-shadow:0 24px 80px rgba(108,92,231,0.25)}
+.wallet-option{display:flex;align-items:center;gap:14px;background:var(--surface2);border:1px solid var(--pb);border-radius:14px;padding:14px 16px;cursor:pointer;transition:all .15s;width:100%;text-align:left;margin-bottom:10px;color:var(--wtext);font-family:'Inter',sans-serif}
+.wallet-option:hover{border-color:rgba(108,92,231,0.5);background:#231f42}
+
+/* ── TOAST ── */
+.toast{position:fixed;bottom:24px;right:24px;z-index:2000;background:var(--surface);border:1px solid var(--gb);border-radius:12px;padding:12px 18px;font-size:13px;font-weight:600;color:var(--wtext);display:flex;align-items:center;gap:8px;max-width:360px;transform:translateY(80px);opacity:0;transition:all .3s;pointer-events:none}
+.toast.show{transform:translateY(0);opacity:1}
+.toast-dot{width:7px;height:7px;border-radius:50%;background:var(--pl);flex-shrink:0}
+
+@media(max-width:768px){
+  .nav-links{display:none}
+  .about-inner{grid-template-columns:1fr}
+  .cta-inner{grid-template-columns:1fr}
+  .footer-top{grid-template-columns:1fr}
+  .stats-inner{grid-template-columns:1fr;gap:1.5rem}
+  .tier-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="#" class="nav-brand">
+    <svg width="34" height="34" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0">
+      <rect width="100" height="100" rx="10" fill="#12101e"/>
+      <line x1="0" y1="50" x2="100" y2="50" stroke="#7c6fcd" stroke-width="0.7" opacity="0.4"/>
+      <line x1="0" y1="32" x2="100" y2="32" stroke="#7c9fff" stroke-width="0.5" opacity="0.35"/>
+      <line x1="0" y1="68" x2="100" y2="68" stroke="#7c9fff" stroke-width="0.5" opacity="0.35"/>
+      <text x="14" y="76" font-family="Georgia,serif" font-weight="700" font-size="72" fill="#6c5ce7" opacity="0.5" letter-spacing="-2">D</text>
+      <rect x="28" y="18" width="32" height="9" fill="#5ba4f5" opacity="0.9" rx="1"/>
+      <rect x="28" y="46" width="40" height="8" fill="#9b6bda" opacity="0.95" rx="1"/>
+      <rect x="28" y="66" width="20" height="8" fill="#7c9fff" opacity="0.85" rx="1"/>
+      <text x="16" y="76" font-family="Georgia,serif" font-weight="700" font-size="72" fill="#e8d5ff" opacity="0.95" letter-spacing="-2">D</text>
+      <text x="50" y="76" font-family="Georgia,serif" font-weight="700" font-size="72" fill="#c8b8f8" opacity="0.7" letter-spacing="-2">T</text>
+    </svg>
+    DevTalking Episode
+  </a>
+  <div class="nav-links">
+    <a href="#">Home</a>
+    <a href="#">About</a>
+    <a href="#">Podcast</a>
+    <a href="#web3-section">🔗 Web3</a>
+    <a href="#vote-section">🗳️ Vote</a>
+    <a href="#">Dev Tools</a>
+  </div>
+  <div class="nav-right">
+    <div id="wallet-nav-area">
+      <button class="wallet-connect-btn" onclick="openModal()">🔗 Connect Wallet</button>
+    </div>
+    <a href="https://x.com/Devtalkepisode" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:6px;background:#000;color:#fff;padding:7px 14px;border-radius:20px;font-size:12px;font-weight:700">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="white"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      Follow
+    </a>
+  </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero">
+  <div class="hero-logo">
+    <svg width="110" height="110" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+      <rect width="200" height="200" rx="24" fill="#12101e"/>
+      <line x1="0" y1="100" x2="200" y2="100" stroke="#7c6fcd" stroke-width="1.2" opacity="0.4"/>
+      <line x1="0" y1="62" x2="200" y2="62" stroke="#7c9fff" stroke-width="0.8" opacity="0.35"/>
+      <line x1="0" y1="138" x2="200" y2="138" stroke="#7c9fff" stroke-width="0.8" opacity="0.35"/>
+      <line x1="55" y1="0" x2="55" y2="200" stroke="#7c9fff" stroke-width="0.8" opacity="0.25"/>
+      <text x="28" y="155" font-family="Georgia,serif" font-weight="700" font-size="148" fill="#6c5ce7" opacity="0.45" letter-spacing="-4">D</text>
+      <rect x="55" y="36" width="68" height="18" fill="#5ba4f5" opacity="0.92" rx="2"/>
+      <rect x="55" y="92" width="90" height="16" fill="#9b6bda" opacity="0.95" rx="2"/>
+      <rect x="130" y="92" width="30" height="16" fill="#c084fc" opacity="0.8" rx="2"/>
+      <rect x="55" y="133" width="50" height="16" fill="#7c9fff" opacity="0.88" rx="2"/>
+      <text x="30" y="155" font-family="Georgia,serif" font-weight="700" font-size="148" fill="#e8d5ff" opacity="0.97" letter-spacing="-4">D</text>
+      <text x="105" y="155" font-family="Georgia,serif" font-weight="700" font-size="148" fill="#c8b8f8" opacity="0.55" letter-spacing="-4">T</text>
+    </svg>
+  </div>
+  <h1>Build It, Ship It, Showcase It on DevTalking Episode</h1>
+  <p>A web3 podcast giving builders and founders a stage to showcase what they've built to an engaged developer audience of 95K+</p>
+  <div class="hero-btns">
+    <a href="#" class="btn-primary">🎙️ Listen to the Podcast</a>
+    <button class="btn-web3" onclick="openModal()">🔗 Connect Wallet</button>
+  </div>
+</section>
+
+<!-- ── FEATURED EPISODES ── -->
+<div class="section">
+  <div class="section-header">
+    <h2>Featured Episodes</h2>
+    <a href="#">All Episodes</a>
+  </div>
+  <div class="episodes-grid">
+    <div class="ep-card">
+      <div class="ep-num"><span>S5</span><span>221</span></div>
+      <div>
+        <div style="display:flex;gap:6px;margin-bottom:6px"><span class="ep-badge latest">Latest</span><span class="ep-badge">S5 E221</span></div>
+        <div class="ep-meta">May 7, 2026</div>
+        <div class="ep-title">Running LLMs Locally – Tether CEO Paolo Ardoino Reveals Decentralized AI Platform QVAC</div>
+        <div class="ep-desc">Paolo Ardoino introduces QVAC — Tether's decentralized AI platform where intelligence runs privately and locally on any device.</div>
+      </div>
+    </div>
+    <div class="ep-card">
+      <div class="ep-num"><span>S5</span><span>220</span></div>
+      <div>
+        <div style="display:flex;gap:6px;margin-bottom:6px"><span class="ep-badge">S5 E220</span></div>
+        <div class="ep-meta">May 1, 2026</div>
+        <div class="ep-title">Tea Protocol: Rewarding Open-Source Heroes | Timothy Lewis (CEO &amp; Co-Founder)</div>
+        <div class="ep-desc">Tea is the permissionless network powering the future of open source — turning commits into a global economy.</div>
+      </div>
+    </div>
+    <div class="ep-card">
+      <div class="ep-num"><span>S5</span><span>219</span></div>
+      <div>
+        <div style="display:flex;gap:6px;margin-bottom:6px"><span class="ep-badge">S5 E219</span></div>
+        <div class="ep-meta">Apr 29, 2026</div>
+        <div class="ep-title">Fighting Rare Disease on Undiagnosed Day | Stanley Bishop &amp; Mikk Cederroth</div>
+        <div class="ep-desc">Exploring AI expertise, rare genetic illness medicine, and the Wilhelm Foundation's global voice for undiagnosed diseases.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── STATS ── -->
+<div class="stats-band">
+  <div class="stats-inner">
+    <div><div class="stat-num">200+</div><div class="stat-label">Episodes</div></div>
+    <div><div class="stat-num">95K+</div><div class="stat-label">Audience Reach</div></div>
+    <div><div class="stat-num">200+</div><div class="stat-label">Featured Guests</div></div>
+    <div><div class="stat-num" id="live-sub-count">4,823</div><div class="stat-label">Newsletter Subscribers</div></div>
+  </div>
+</div>
+
+<!-- ── WEB3 / TOKEN TIERS ── -->
+<div class="web3-band" id="web3-section">
+  <div class="web3-inner">
+    <h2>🔗 DTE Token Access</h2>
+    <p>Hold DTE tokens to unlock exclusive content, voting power, and community benefits. Connect your wallet to check your tier.</p>
+    <div class="tier-grid">
+      <div class="tier-card" style="background:var(--memberd);border-color:var(--memberb)" onclick="openModal()">
+        <div class="tier-icon">✅</div>
+        <div class="tier-name" style="color:var(--member)">Member</div>
+        <div class="tier-req" style="color:var(--member)">100+ DTE</div>
+        <div class="tier-perks" style="color:var(--member)">Episode notes · Community voting · Newsletter</div>
+      </div>
+      <div class="tier-card" style="background:var(--supporterd);border-color:var(--supporterb)" onclick="openModal()">
+        <div class="tier-icon">💙</div>
+        <div class="tier-name" style="color:var(--supporter)">Supporter</div>
+        <div class="tier-req" style="color:var(--supporter)">1,000+ DTE</div>
+        <div class="tier-perks" style="color:var(--supporter)">Early access · AMA invites · Discord VIP</div>
+      </div>
+      <div class="tier-card" style="background:var(--builderd);border-color:var(--builderb)" onclick="openModal()">
+        <div class="tier-icon">🔨</div>
+        <div class="tier-name" style="color:var(--builder)">Builder</div>
+        <div class="tier-req" style="color:var(--builder)">5,000+ DTE</div>
+        <div class="tier-perks" style="color:var(--builder)">Guest priority · Co-host opportunity · Revenue share</div>
+      </div>
+      <div class="tier-card" style="background:var(--founderd);border-color:var(--founderb)" onclick="openModal()">
+        <div class="tier-icon">👑</div>
+        <div class="tier-name" style="color:var(--founder)">Founder</div>
+        <div class="tier-req" style="color:var(--founder)">10,000+ DTE</div>
+        <div class="tier-perks" style="color:var(--founder)">Naming rights · Founding badge · Equity discussion</div>
+      </div>
+    </div>
+    <div id="wallet-status-band" style="background:rgba(108,92,231,0.1);border:1px solid var(--pb);border-radius:14px;padding:1rem 1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+      <div>
+        <div style="font-weight:700;font-size:14px;color:var(--wtext);margin-bottom:4px">Connect your wallet to check your DTE tier</div>
+        <div style="font-size:13px;color:var(--td)">MetaMask, WalletConnect or Coinbase Wallet supported</div>
+      </div>
+      <button class="wallet-connect-btn" onclick="openModal()">🔗 Connect Wallet</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── TOKEN GATE ── -->
+<div class="token-gate-section">
+  <div class="token-gate-inner">
+    <h2>🔒 Token-Gated Content</h2>
+    <p>Exclusive content unlocked by your DTE token tier. Connect your wallet to access.</p>
+    <div class="gate-tabs">
+      <button class="gate-tab active" onclick="showGate('member',this)">✅ Member</button>
+      <button class="gate-tab" onclick="showGate('supporter',this)">💙 Supporter</button>
+      <button class="gate-tab" onclick="showGate('builder',this)">🔨 Builder</button>
+      <button class="gate-tab" onclick="showGate('founder',this)">👑 Founder</button>
+    </div>
+    <div class="gate-content-area" id="gate-content"></div>
+  </div>
+</div>
+
+<!-- ── ON-CHAIN VOTING ── -->
+<div class="voting-section" id="vote-section">
+  <div class="voting-inner">
+    <h2>⛓️ On-Chain Episode Voting</h2>
+    <p>Sign votes with your wallet. DTE balance determines quadratic voting weight. Top episodes air first.</p>
+
+    <div id="vote-status-bar" style="background:rgba(108,92,231,0.1);border:1px solid var(--pb);border-radius:14px;padding:1rem 1.5rem;margin-bottom:1.5rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px">
+      <div style="font-weight:700;font-size:14px;color:var(--wtext)">Connect wallet to vote on-chain</div>
+      <button class="wallet-connect-btn" onclick="openModal()">🔗 Connect Wallet</button>
+    </div>
+
+    <div id="episodes-vote-list" style="margin-bottom:2rem"></div>
+
+    <h3 style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:var(--wtext);margin-bottom:1rem">🏆 Weighted Leaderboard</h3>
+    <div style="background:var(--surface);border:1px solid var(--pb);border-radius:14px;overflow:hidden">
+      <div style="padding:0.85rem 1.25rem;border-bottom:1px solid var(--pb);font-size:13px;font-weight:700;color:var(--wtext)">⛓️ On-Chain Weighted Rankings · Season 5</div>
+      <div id="leaderboard"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ── TESTIMONIALS ── -->
+<div class="section">
+  <div class="section-header"><h2>What People Are Saying</h2></div>
+  <p style="color:var(--gray-400);font-size:0.875rem;margin-bottom:1.5rem;margin-top:-1rem">Hear from guests and community members about their DevTalking Episode experience</p>
+  <div class="testimonials-grid">
+    <div class="testi-card">
+      <div class="testi-text">The @devtalkingep podcast has allowed us to showcase our tech and reach new audiences.</div>
+      <div class="testi-author">
+        <div class="testi-avatar"><img src="https://i.pravatar.cc/80?img=60" alt="AR.IO"/></div>
+        <div><div class="testi-name">AR.IO</div><div class="testi-role">@ar_io_network</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-text">Huge respect for building such an enduring show featuring crypto builders. Proud to have represented on the show.</div>
+      <div class="testi-author">
+        <div class="testi-avatar"><img src="https://i.pravatar.cc/80?img=32" alt="Albert Hu"/></div>
+        <div><div class="testi-name">Albert Hu</div><div class="testi-role">CEO, Megaphone</div></div>
+      </div>
+    </div>
+    <div class="testi-card">
+      <div class="testi-text">The impact is massive. Thousands of builders have been motivated to build the future of money through DevTalking Episode.</div>
+      <div class="testi-author">
+        <div class="testi-avatar"><img src="https://i.pravatar.cc/80?img=53" alt="William Kempster"/></div>
+        <div><div class="testi-name">William Kempster</div><div class="testi-role">Head of Ecosystem &amp; Sales, AR.IO</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── ABOUT ── -->
+<div class="about-section">
+  <div class="about-inner">
+    <div class="about-img"><img src="https://www.devntell.com/_next/image?url=%2Fimages%2Fabout-devntell.png&w=1080&q=75" alt="About DevTalking Episode"/></div>
+    <div class="about-content">
+      <h2>About DevTalking Episode</h2>
+      <p>DevTalking Episode is a weekly 30-min podcast where builders and founders showcase what they've built to the web3 community.</p>
+      <p>Get insights from the forefront of bleeding-edge tech from founders and developers creating the next wave of disruptive innovations in web3 and AI. Broadcast to one of the most engaged developer communities in web3.</p>
+      <a href="#" class="link-arrow">Learn More →</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── COMPANIES ── -->
+<div class="companies-section">
+  <div class="companies-inner">
+    <h2>We've hosted some of the best in the industry</h2>
+    <div class="companies-scroll">
+      <div class="company-chip">Glider</div><div class="company-chip">Parity</div><div class="company-chip">Project 0</div><div class="company-chip">Pyth Network</div><div class="company-chip">Quai Network</div><div class="company-chip">Coindesk</div><div class="company-chip">Ethereum Foundation</div><div class="company-chip">Berachain</div><div class="company-chip">BNB Chain</div><div class="company-chip">DoubleZero</div><div class="company-chip">EigenLayer</div><div class="company-chip">AR.IO</div><div class="company-chip">Near</div><div class="company-chip">AO</div><div class="company-chip">Filecoin</div><div class="company-chip">Cyfrin</div><div class="company-chip">Across</div><div class="company-chip">Consensys</div><div class="company-chip">Thirdweb</div><div class="company-chip">Morpheous</div><div class="company-chip">Katana</div><div class="company-chip">Mantle</div><div class="company-chip">Reown</div><div class="company-chip">Abstract</div><div class="company-chip">Rootstock</div><div class="company-chip">Hedera</div><div class="company-chip">Movement</div><div class="company-chip">Fuel Network</div><div class="company-chip">NeonEVM</div><div class="company-chip">Morph</div><div class="company-chip">Megaphone</div><div class="company-chip">Celestia</div><div class="company-chip">Stacks</div><div class="company-chip">Tenderly</div><div class="company-chip">Cartesi</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── CTA ── -->
+<div class="cta-strip">
+  <div class="cta-inner">
+    <div class="cta-card">
+      <h3>Never miss an episode</h3>
+      <p>Subscribe to our newsletter and never miss an episode or latest ongoings with Developer DAO.</p>
+      <a href="https://lu.ma/developer-dao-events" class="btn-outline" target="_blank" rel="noopener">Sign Up for Events</a>
+    </div>
+    <div class="cta-card">
+      <h3>Partner with DevTalking Episode</h3>
+      <p>Interested in sponsoring content or exploring partnership opportunities? Let's collaborate.</p>
+      <a href="https://calendly.com/narb/devntell" class="btn-outline" target="_blank" rel="noopener">Book a Call</a>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">
+          <svg width="28" height="28" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <rect width="100" height="100" rx="10" fill="#12101e"/>
+            <text x="16" y="76" font-family="Georgia,serif" font-weight="700" font-size="72" fill="#e8d5ff" opacity="0.95" letter-spacing="-2">D</text>
+            <text x="50" y="76" font-family="Georgia,serif" font-weight="700" font-size="72" fill="#c8b8f8" opacity="0.7" letter-spacing="-2">T</text>
+          </svg>
+          DevTalking Episode
+        </div>
+      </div>
+      <div>
+        <div class="footer-links">
+          <a href="#">Home</a><a href="#">About</a><a href="#">Podcast</a>
+          <a href="#">Developer Tools</a><a href="#">Blog</a><a href="#">Developer DAO</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2026 Developer DAO Foundation. All rights reserved</span>
+      <a href="https://x.com/Devtalkepisode" class="x-badge" target="_blank" rel="noopener">
+        <svg class="x-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.747l7.73-8.835L1.254 2.25H8.08l4.259 5.63 5.905-5.63Zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        Follow on X
+      </a>
+    </div>
+  </div>
+</footer>
+
+<!-- ── CONNECT MODAL ── -->
+<div class="modal-overlay" id="connect-modal" onclick="closeModal()">
+  <div class="modal-box" onclick="event.stopPropagation()">
+    <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px">
+      <div>
+        <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:20px;color:var(--wtext);margin-bottom:4px">Connect Wallet</div>
+        <div style="font-size:13px;color:var(--td)">Connect to unlock DTE token features & on-chain voting</div>
+      </div>
+      <button onclick="closeModal()" style="background:none;border:none;color:var(--td);font-size:20px;cursor:pointer;padding:4px">✕</button>
+    </div>
+    <button class="wallet-option" onclick="connectWallet('metamask')"><span style="font-size:28px">🦊</span><div><div style="font-weight:700;font-size:14px">MetaMask</div><div style="font-size:12px;color:var(--td)">Browser extension wallet</div></div><span style="color:var(--td);margin-left:auto">→</span></button>
+    <button class="wallet-option" onclick="connectWallet('walletconnect')"><span style="font-size:28px">🔗</span><div><div style="font-weight:700;font-size:14px">WalletConnect</div><div style="font-size:12px;color:var(--td)">QR code · 300+ wallets</div></div><span style="color:var(--td);margin-left:auto">→</span></button>
+    <button class="wallet-option" style="margin-bottom:0" onclick="connectWallet('coinbase')"><span style="font-size:28px">🔵</span><div><div style="font-weight:700;font-size:14px">Coinbase Wallet</div><div style="font-size:12px;color:var(--td)">Base network native</div></div><span style="color:var(--td);margin-left:auto">→</span></button>
+    <div style="font-size:11px;color:var(--tf);text-align:center;margin-top:16px">By connecting you agree to our Terms of Service</div>
+  </div>
+</div>
+
+<!-- ── TOAST ── -->
+<div class="toast" id="toast"><div class="toast-dot"></div><span id="toast-msg"></span></div>
+
+<script>
+// ── DATA ──────────────────────────────────────────────────────
+let W = {connected:false,address:null,dte:0,eth:0,tier:null,weight:0};
+let userVotes = [];
+let sigLog = [];
+
+const TIERS = {
+  founder:  {min:10000,color:"var(--founder)",bg:"var(--founderd)",border:"var(--founderb)",label:"👑 Founder"},
+  builder:  {min:5000, color:"var(--builder)",bg:"var(--builderd)",border:"var(--builderb)",label:"🔨 Builder"},
+  supporter:{min:1000, color:"var(--supporter)",bg:"var(--supporterd)",border:"var(--supporterb)",label:"💙 Supporter"},
+  member:   {min:100,  color:"var(--member)",bg:"var(--memberd)",border:"var(--memberb)",label:"✅ Member"},
+};
+const TIER_ORDER = ["member","supporter","builder","founder"];
+
+const GATED = {
+  member:   {icon:"🎙️",title:"Member-Only Episode Notes",desc:"Full show notes, timestamps and guest links for every episode. Exclusive to DTE token holders.",perks:["Access to all episode notes","Community voting rights","Weekly newsletter"]},
+  supporter:{icon:"🎤",title:"Early Episode Access + AMA Invitations",desc:"Access new episodes 48 hours early. Monthly AMA sessions with guests.",perks:["All Member perks","48hr early episode access","AMA invitations","Discord VIP channel"]},
+  builder:  {icon:"🔨",title:"Builder Round Table Access",desc:"Monthly private calls with builders and the DevTalking Episode team. Guest application priority.",perks:["All Supporter perks","Guest application priority","Co-host opportunity","Revenue share"]},
+  founder:  {icon:"👑",title:"Founding Member Benefits",desc:"Episode naming rights, equity discussion, founding member badge, and direct line to the show.",perks:["All Builder perks","Founding member badge","Episode naming rights","Equity discussion"]},
+};
+
+const EPISODES = [
+  {id:"ep222",s:5,n:222,title:"ZK Proofs Explained — Real Use Cases for Everyday Devs",guest:"Priya Nakamura",role:"CTO, ZeroTrace Protocol",tags:["ZK","Privacy"],votes:142,weight:8420},
+  {id:"ep223",s:5,n:223,title:"Building a Decentralized Social Graph on Lens Protocol",guest:"James Okoye",role:"Founder, SocialLayer",tags:["Social","DeFi"],votes:98,weight:5210},
+  {id:"ep224",s:5,n:224,title:"AI Agents + Smart Contracts: The Autonomous Economy",guest:"Kai Yamamoto",role:"Co-Founder, AgentDAO",tags:["AI","Agents"],votes:334,weight:19870},
+  {id:"ep225",s:5,n:225,title:"Restaking Wars: Is EigenLayer Still the King?",guest:"Amara Diallo",role:"Research Lead, Chorus One",tags:["Restaking","EigenLayer"],votes:178,weight:10440},
+  {id:"ep226",s:5,n:226,title:"Open Source Sustainability — Can Code Eat Its Own Tail?",guest:"Luca Bianchi",role:"CEO, Tea Protocol",tags:["Open Source","Funding"],votes:89,weight:4180},
+];
+
+// ── HELPERS ───────────────────────────────────────────────────
+const shortAddr = a => a.slice(0,6)+"..."+a.slice(-4);
+function computeTier(d){if(d>=10000)return"founder";if(d>=5000)return"builder";if(d>=1000)return"supporter";if(d>=100)return"member";return null;}
+function voteWeight(d){return Math.floor(Math.sqrt(d)*10)/10}
+
+function showToast(msg,err=false){
+  const t=document.getElementById("toast");
+  document.getElementById("toast-msg").textContent=msg;
+  t.style.borderColor=err?"var(--rb)":"var(--gb)";
+  t.classList.add("show");setTimeout(()=>t.classList.remove("show"),3200);
+}
+
+// ── MODAL ─────────────────────────────────────────────────────
+function openModal(){document.getElementById("connect-modal").classList.add("open")}
+function closeModal(){document.getElementById("connect-modal").classList.remove("open")}
+
+// ── CONNECT ───────────────────────────────────────────────────
+async function connectWallet(type){
+  closeModal();
+  try{
+    let address,eth;
+    if(type==="metamask"&&window.ethereum){
+      const accs=await window.ethereum.request({method:"eth_requestAccounts"});
+      address=accs[0];
+      const bh=await window.ethereum.request({method:"eth_getBalance",params:[address,"latest"]});
+      eth=(parseInt(bh,16)/1e18).toFixed(4);
+    } else {
+      address="0x"+Array.from({length:40},()=>"0123456789abcdef"[Math.floor(Math.random()*16)]).join("");
+      eth=(Math.random()*3+0.1).toFixed(4);
+    }
+    const dte=parseFloat((Math.random()*12000+50).toFixed(2));
+    const tier=computeTier(dte);
+    const weight=voteWeight(dte);
+    W={connected:true,address,eth,dte,tier,weight};
+    updateAll();
+    showToast("Wallet connected! "+shortAddr(address)+" 🎉");
+    if(window.ethereum){
+      window.ethereum.on("accountsChanged",a=>{if(!a.length)disconnect()});
+    }
+  } catch(e){
+    showToast(e.code===4001?"Connection rejected by user":e.message,true);
+  }
+}
+
+function disconnect(){
+  W={connected:false,address:null,dte:0,eth:0,tier:null,weight:0};
+  userVotes=[];sigLog=[];
+  updateAll();
+  showToast("Wallet disconnected");
+}
+
+function updateAll(){
+  updateNavWallet();
+  updateWalletStatusBand();
+  renderGateContent(document.querySelector(".gate-tab.active")?.textContent?.toLowerCase().match(/member|supporter|builder|founder/)?.[0]||"member");
+  renderVoteStatus();
+  renderEpisodes();
+}
+
+// ── NAV WALLET ────────────────────────────────────────────────
+function updateNavWallet(){
+  const el=document.getElementById("wallet-nav-area");
+  if(!W.connected){
+    el.innerHTML=`<button class="wallet-connect-btn" onclick="openModal()">🔗 Connect Wallet</button>`;
+    return;
+  }
+  const tc=W.tier?TIERS[W.tier]:null;
+  el.innerHTML=`<div class="wallet-chip" style="border-color:${tc?tc.border:'var(--pb)'}" onclick="document.getElementById('nav-drop').classList.toggle('open')">
+    <div class="wallet-dot"></div>
+    ${tc?`<span style="font-size:11px;font-weight:700;color:${tc.color}">${tc.label}</span>`:""}
+    <span style="color:var(--wtext)">${shortAddr(W.address)}</span>
+    <span style="font-size:11px;color:var(--td);border-left:1px solid var(--pb);padding-left:8px">${W.dte.toLocaleString()} DTE</span>
+    <span style="color:var(--td)">▾</span>
+    <div class="wallet-dropdown" id="nav-drop">
+      <div style="font-size:11px;font-weight:700;color:var(--td);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px">DTE Balance</div>
+      <div style="background:var(--pd);border:1px solid var(--pb);border-radius:8px;padding:10px 12px;margin-bottom:10px">
+        <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:22px;color:var(--pl)">${W.dte.toLocaleString()}</div>
+        <div style="font-size:11px;color:var(--td)">DTE · Vote weight: ${W.weight}x</div>
+      </div>
+      ${tc?`<div style="background:${tc.bg};border:1px solid ${tc.border};border-radius:8px;padding:7px 12px;text-align:center;font-size:12px;font-weight:700;color:${tc.color};margin-bottom:10px">${tc.label} Access Unlocked</div>`:`<div style="background:var(--rd);border:1px solid var(--rb);border-radius:8px;padding:7px 12px;text-align:center;font-size:12px;color:var(--red);margin-bottom:10px">Need 100+ DTE for Member access</div>`}
+      <button onclick="disconnect()" style="width:100%;padding:9px;background:var(--rd);border:1px solid var(--rb);border-radius:8px;color:var(--red);font-weight:700;font-size:13px;cursor:pointer">Disconnect</button>
+    </div>
+  </div>`;
+}
+
+// ── WALLET STATUS BAND ────────────────────────────────────────
+function updateWalletStatusBand(){
+  const el=document.getElementById("wallet-status-band");
+  if(!W.connected){
+    el.innerHTML=`<div><div style="font-weight:700;font-size:14px;color:var(--wtext);margin-bottom:4px">Connect your wallet to check your DTE tier</div><div style="font-size:13px;color:var(--td)">MetaMask, WalletConnect or Coinbase Wallet supported</div></div><button class="wallet-connect-btn" onclick="openModal()">🔗 Connect Wallet</button>`;
+    return;
+  }
+  const tc=W.tier?TIERS[W.tier]:null;
+  el.style.borderColor=tc?tc.border:"var(--pb)";
+  el.innerHTML=`<div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+    <div style="width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,var(--purple),#9b6bda);display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0">🦊</div>
+    <div>
+      <div style="font-weight:700;font-size:14px;color:var(--wtext)">${shortAddr(W.address)}</div>
+      <div style="font-size:12px;color:var(--td)">${W.dte.toLocaleString()} DTE${W.tier?` · <span style="color:${tc.color}">${tc.label}</span>`:""}</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:16px">
+    ${[["DTE",W.dte.toLocaleString()],["Weight",W.weight+"x"],["Tier",W.tier||"None"]].map(([l,v])=>`<div style="text-align:center"><div style="font-weight:800;font-size:17px;color:var(--wtext);font-family:'Syne',sans-serif">${v}</div><div style="font-size:10px;color:var(--td);font-weight:600;text-transform:uppercase;letter-spacing:0.04em">${l}</div></div>`).join("")}
+  </div>
+  <button onclick="disconnect()" style="background:var(--rd);border:1px solid var(--rb);border-radius:8px;padding:7px 14px;color:var(--red);font-weight:700;font-size:12px;cursor:pointer">Disconnect</button>`;
+}
+
+// ── TOKEN GATE ────────────────────────────────────────────────
+function showGate(tier,btn){
+  document.querySelectorAll(".gate-tab").forEach(b=>b.classList.remove("active"));
+  btn.classList.add("active");
+  renderGateContent(tier);
+}
+
+function renderGateContent(tier){
+  const el=document.getElementById("gate-content");
+  const tc=TIERS[tier]; const gc=GATED[tier];
+  const tierIdx=TIER_ORDER.indexOf(tier);
+  const userIdx=W.tier?TIER_ORDER.indexOf(W.tier):-1;
+  const hasAccess=W.connected&&userIdx>=tierIdx;
+  const hasLower=W.connected&&userIdx>=0&&userIdx<tierIdx;
+
+  if(hasAccess){
+    el.innerHTML=`<div style="background:var(--surface);border:1px solid ${tc.border};border-radius:14px;padding:1.5rem">
+      <div style="display:inline-flex;align-items:center;gap:6px;background:${tc.bg};border:1px solid ${tc.border};border-radius:10px;padding:6px 12px;margin-bottom:12px;font-size:12px;font-weight:700;color:${tc.color}">${tc.label} Access Unlocked · ${W.dte.toLocaleString()} DTE</div>
+      <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:16px;color:var(--wtext);margin-bottom:8px">${gc.icon} ${gc.title}</div>
+      <p style="font-size:13px;color:var(--td);line-height:1.7;margin-bottom:12px">${gc.desc}</p>
+      <div style="display:flex;flex-direction:column;gap:6px">${gc.perks.map(p=>`<div style="display:flex;align-items:center;gap:8px;font-size:13px;color:var(--tm)"><span style="color:${tc.color}">✓</span>${p}</div>`).join("")}</div>
+    </div>`;
+  } else if(hasLower){
+    const needed=tc.min-W.dte;
+    const pct=Math.min((W.dte/tc.min)*100,100);
+    const cur=W.tier?TIERS[W.tier]:null;
+    el.innerHTML=`<div style="background:var(--surface);border:2px dashed ${tc.border};border-radius:20px;padding:2rem;text-align:center">
+      <div style="font-size:36px;margin-bottom:10px">⬆️</div>
+      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:var(--wtext);margin-bottom:8px">Upgrade Required</div>
+      <div style="font-size:13px;color:var(--td);margin-bottom:14px">You have <strong style="color:${cur?.color||'var(--wtext)'}">${W.dte.toLocaleString()} DTE</strong>. Need <strong style="color:${tc.color}">${needed.toLocaleString()} more DTE</strong> for ${tc.label}.</div>
+      <div style="height:8px;background:var(--surface2);border-radius:4px;overflow:hidden;margin-bottom:8px"><div style="height:100%;width:${pct}%;background:linear-gradient(90deg,${cur?.color||'var(--purple)'},${tc.color});border-radius:4px"></div></div>
+      <div style="font-size:11px;color:var(--td);margin-bottom:16px">${W.dte.toLocaleString()} / ${tc.min.toLocaleString()} DTE</div>
+      <a href="https://x.com/Devtalkepisode" target="_blank" style="display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,var(--purple),#9b6bda);border:none;border-radius:10px;padding:10px 24px;color:#fff;font-weight:700;font-size:13px">Get More DTE →</a>
+    </div>`;
+  } else {
+    el.innerHTML=`<div style="background:var(--surface);border:2px dashed ${tc.border};border-radius:20px;padding:2.5rem 2rem;text-align:center">
+      <div style="width:60px;height:60px;border-radius:50%;background:${tc.bg};border:1px solid ${tc.border};display:flex;align-items:center;justify-content:center;font-size:26px;margin:0 auto 1rem">🔒</div>
+      <div style="font-family:'Syne',sans-serif;font-weight:800;font-size:18px;color:var(--wtext);margin-bottom:8px">${gc.icon} ${tier.charAt(0).toUpperCase()+tier.slice(1)} Content</div>
+      <div style="font-size:13px;color:var(--td);margin-bottom:16px;line-height:1.7">Hold <strong style="color:${tc.color}">${tc.min.toLocaleString()}+ DTE tokens</strong> to unlock.<br/>Connect your wallet to check your balance.</div>
+      <div style="background:var(--surface2);border:1px solid var(--pb);border-radius:12px;padding:1rem;margin-bottom:16px;text-align:left;display:inline-block;min-width:240px">
+        ${gc.perks.map(p=>`<div style="display:flex;align-items:center;gap:8px;font-size:12px;color:var(--tm);margin-bottom:5px"><span style="color:${tc.color}">✓</span>${p}</div>`).join("")}
+      </div>
+      <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+        <button class="wallet-connect-btn" onclick="openModal()">🔗 Connect Wallet</button>
+        <a href="https://x.com/Devtalkepisode" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:transparent;border:1px solid var(--pb);border-radius:10px;padding:8px 16px;color:var(--tm);font-weight:600;font-size:12px">Get DTE →</a>
+      </div>
+    </div>`;
+  }
+}
+
+// ── VOTING ────────────────────────────────────────────────────
+function renderVoteStatus(){
+  const el=document.getElementById("vote-status-bar");
+  if(!W.connected){
+    el.innerHTML=`<div style="font-weight:700;font-size:14px;color:var(--wtext)">Connect wallet to vote on-chain</div><button class="wallet-connect-btn" onclick="openModal()">🔗 Connect Wallet</button>`;
+    return;
+  }
+  el.style.borderColor="var(--gb)";
+  el.innerHTML=`<div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+    <div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--purple),#9b6bda);display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🦊</div>
+    <div><div style="font-weight:700;font-size:14px;color:var(--wtext)">${shortAddr(W.address)}</div><div style="font-size:12px;color:var(--td)">${W.dte.toLocaleString()} DTE · ${W.tier||"No tier"}</div></div>
+  </div>
+  <div style="display:flex;gap:16px">
+    ${[["Votes Cast",userVotes.length],["Weight",W.weight+"x"],["DTE",W.dte.toLocaleString()]].map(([l,v])=>`<div style="text-align:center"><div style="font-weight:800;font-size:16px;color:var(--wtext);font-family:'Syne',sans-serif">${v}</div><div style="font-size:10px;color:var(--td);font-weight:600;text-transform:uppercase;letter-spacing:0.04em">${l}</div></div>`).join("")}
+  </div>`;
+}
+
+function renderEpisodes(){
+  const maxW=Math.max(...EPISODES.map(e=>e.weight));
+  document.getElementById("episodes-vote-list").innerHTML=EPISODES.map(ep=>`
+    <div class="vote-card${userVotes.includes(ep.id)?" voted":""}" id="vc-${ep.id}">
+      <div class="vote-ep-num"><span class="vote-ep-s">S${ep.s}</span><span class="vote-ep-n">${ep.n}</span></div>
+      <div style="flex:1;min-width:0">
+        <div style="font-family:'Syne',sans-serif;font-weight:700;font-size:14px;color:var(--wtext);margin-bottom:4px;line-height:1.35">${ep.title}</div>
+        <div style="font-size:12px;color:var(--td);margin-bottom:6px">${ep.guest} · ${ep.role}</div>
+        <div style="margin-bottom:4px">${ep.tags.map(t=>`<span class="vote-tag">${t}</span>`).join("")}</div>
+        <div style="font-size:10px;color:var(--td)">Weighted: <strong style="color:var(--tm)">${ep.weight.toLocaleString()} pts</strong></div>
+        <div class="weight-bar"><div class="weight-fill" style="width:${(ep.weight/maxW)*100}%"></div></div>
+        ${userVotes.includes(ep.id)?`<div style="display:inline-flex;align-items:center;gap:5px;background:var(--gd);border:1px solid var(--gb);border-radius:20px;padding:2px 8px;font-size:10px;font-weight:700;color:var(--green);margin-top:6px">✓ Signed on-chain · ${W.weight}x</div>`:""}
+      </div>
+      <div style="display:flex;flex-direction:column;align-items:center;gap:6px;flex-shrink:0">
+        <button class="vote-btn${userVotes.includes(ep.id)?" voted":""}" onclick="handleVote('${ep.id}')" ${!W.connected?"disabled":""}>▲</button>
+        <div style="font-weight:800;font-size:17px;color:var(--tm);font-family:'Syne',sans-serif" id="vc-votes-${ep.id}">${ep.votes}</div>
+        <div style="font-size:9px;color:var(--td);font-weight:600;text-transform:uppercase;letter-spacing:0.04em">votes</div>
+      </div>
+    </div>
+  `).join("");
+  renderLeaderboard();
+}
+
+async function handleVote(id){
+  if(!W.connected){openModal();return;}
+  const ep=EPISODES.find(e=>e.id===id);
+  const already=userVotes.includes(id);
+  const btn=document.querySelector(`#vc-${id} .vote-btn`);
+  if(already){
+    userVotes=userVotes.filter(v=>v!==id);
+    ep.votes--;ep.weight-=W.dte;
+    showToast("Vote removed");
+  } else {
+    if(btn){btn.textContent="⏳";btn.disabled=true;}
+    await new Promise(r=>setTimeout(r,1100));
+    const sig="0x"+Array.from({length:130},()=>"0123456789abcdef"[Math.floor(Math.random()*16)]).join("");
+    userVotes.push(id);
+    ep.votes++;ep.weight+=W.dte;
+    sigLog.unshift({episode:ep.title,sig:sig.slice(0,20)+"...",weight:W.weight,time:new Date().toLocaleTimeString()});
+    showToast(`Vote signed! Sig: ${sig.slice(0,14)}... Weight: ${W.weight}x`);
+  }
+  renderVoteStatus();
+  renderEpisodes();
+}
+
+function renderLeaderboard(){
+  const sorted=[...EPISODES].sort((a,b)=>b.weight-a.weight);
+  const maxW=sorted[0]?.weight||1;
+  const medals=["🥇","🥈","🥉"];
+  document.getElementById("leaderboard").innerHTML=sorted.map((ep,i)=>`
+    <div class="lb-row" style="background:${i===0?"rgba(108,92,231,0.08)":"transparent"}">
+      <div style="width:26px;font-weight:800;font-size:13px;flex-shrink:0;color:${i===0?"#fbbf24":i===1?"#a89fcc":i===2?"#9b6bda":"var(--td)"}">${medals[i]||"#"+(i+1)}</div>
+      <div style="flex:1;font-size:12px;font-weight:600;color:var(--tm);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${ep.title}</div>
+      <div style="width:80px;height:4px;border-radius:2px;background:rgba(124,111,205,0.15);overflow:hidden;flex-shrink:0"><div style="height:100%;width:${(ep.weight/maxW)*100}%;background:linear-gradient(90deg,var(--purple),var(--pl));border-radius:2px"></div></div>
+      <div style="font-size:10px;color:var(--td);min-width:50px;text-align:right">${ep.votes}v</div>
+      <div style="font-weight:800;font-size:13px;color:var(--pl);min-width:60px;text-align:right">${ep.weight.toLocaleString()}pts</div>
+    </div>
+  `).join("");
+}
+
+// ── INIT ─────────────────────────────────────────────────────
+renderGateContent("member");
+renderEpisodes();
+
+// Auto-reconnect MetaMask
+if(window.ethereum){
+  window.ethereum.request({method:"eth_accounts"}).then(a=>{
+    if(a[0])connectWallet("metamask").catch(()=>{});
+  });
+  window.ethereum.on("accountsChanged",a=>{if(!a.length)disconnect()});
+  window.ethereum.on("chainChanged",()=>location.reload());
+}
+
+// Close dropdown when clicking outside
+document.addEventListener("click",e=>{
+  if(!e.target.closest(".wallet-chip"))document.querySelectorAll(".wallet-dropdown").forEach(d=>d.classList.remove("open"));
+});
+</script>
+</body>
+</html>
